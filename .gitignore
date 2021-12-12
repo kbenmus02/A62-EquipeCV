@@ -1,9 +1,5 @@
 /cell_images/
 /data/sample/
-/model/X.pklz
-/model/X_train.pklz
-/model/X_test.pklz
-/model/y.pklz
-/model/y_train.pklz
-/model/y_test.pklz
+/model/X*
+/model/y*
 /notebook/.ipynb_checkpoints/
