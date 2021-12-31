@@ -1,5 +1,4 @@
 /cell_images/
 /data/sample/
-/model/X*
-/model/y*
 /notebook/.ipynb_checkpoints/
+/model
