@@ -16,6 +16,11 @@ jobs:
           
           echo "chargement des donnees"
           dvc pull model
+          echo "chargement termine"
+
+          pip install -r requirements.txt
+          jupyter nbconvert --to notebook --execute notebook/iteration_9_1_test_model_sur_git.ipynb
+          
           echo "FINI"
 
           
