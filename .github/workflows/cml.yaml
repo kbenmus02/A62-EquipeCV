@@ -1,0 +1,27 @@
+name: projetA62
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: cml_run
+        env:
+          #repo_token: ${{ secrets.GITHUB_TOKEN }}
+          #GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+          GDRIVE_CREDENTIALS_DATA: "ya29.a0ARrdaM8zMXhrq8TgWbj2wyJuNG1HhrLgZm_PSyeycUcLas3iCFcA7wLqcat8SEX2oJh_qm7suUueEulxBZznxHvtM7nXVO_avIiH6nu5LIUECFWThxm5IHL9Qc9OYif5_u5cL01NuOIwiNuEX6e_qvfkVjxN"
+
+        run: |
+          
+          dvc pull model
+          echo "FINI"
+
+          
+          # Your ML workflow goes here
+          #pip install -r requirements.txt
+          #python Pointure_GaussianNB.ipynb
+          #jupyter nbconvert --to notebook --execute Pointure_GaussianNB.ipynb
+          # Write your CML report
+          #echo "## Metriques:" >> report.md
+          #cat metrics.txt >> report.md
