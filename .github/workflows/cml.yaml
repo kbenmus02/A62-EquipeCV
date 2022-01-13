@@ -10,7 +10,7 @@ jobs:
         env:
           #repo_token: ${{ secrets.GITHUB_TOKEN }}
           #GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-          GDRIVE_CREDENTIALS_DATA: "ya29.a0ARrdaM8zMXhrq8TgWbj2wyJuNG1HhrLgZm_PSyeycUcLas3iCFcA7wLqcat8SEX2oJh_qm7suUueEulxBZznxHvtM7nXVO_avIiH6nu5LIUECFWThxm5IHL9Qc9OYif5_u5cL01NuOIwiNuEX6e_qvfkVjxN"
+          GDRIVE_CREDENTIALS_DATA: "a1Fz59uTpVNeG_VGuSKDLJXv"
 
         run: |
           
