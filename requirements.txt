@@ -6,3 +6,9 @@ opencv-python
 pickleshare
 seaborn
 sklearn
+jupyter
+matplotlib
+
+
+
+
