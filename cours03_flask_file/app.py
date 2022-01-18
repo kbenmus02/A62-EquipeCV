@@ -189,5 +189,5 @@ def load_model(model_file_info: str):
     return model
     #--- Charge le modèle
 
-
-
+if __name__ == "__main__":
+    app.run()
