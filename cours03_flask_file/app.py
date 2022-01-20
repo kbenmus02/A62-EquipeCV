@@ -34,7 +34,7 @@ app.config["UPLOAD_PATH"] = "uploaded_img" # Le répertoire doit exister avant d
 PATH_ROOT = ".."
 PATH_NOTEBOOK = PATH_ROOT + "/notebook"
 PATH_MODEL = PATH_ROOT + "/model"
-MODEL_FILE_NAME = "model_rf_rm_2021-01-16_14h28.pklz"
+MODEL_FILE_NAME = "model_cnn_2.h5"
 IMG_SIZE = 64
 IMG_IN_COLOR = 1
 
@@ -130,7 +130,7 @@ def predict():
 
     # === Charge le modèle
     print("### Chargement du modèle ...")
-    model = keras.models.load_model(PATH_MODEL)
+    model = keras.models.load_model(PATH_MODEL+ "/" + MODEL_FILE_NAME)
     #model = utils.pickle_read(PATH_MODEL + "/" + MODEL_FILE_NAME)
     print("### " + str(model))
     print("### Chargement du modèle fait")
@@ -152,6 +152,7 @@ def predict():
         print("###", df_img_file_name.iloc[i]["img_file_info"])
         preprocessed_img_arr = preprocess_img(df_img_file_name.iloc[i]["img_file_info"], IMG_SIZE).reshape((1, 64, 64, 3))
         img_prediction = model.predict(preprocessed_img_arr)
+        print("###", img_prediction)
         df_img_file_name.at[i, "img_prediction"] = img_prediction
 
     print(df_img_file_name)
