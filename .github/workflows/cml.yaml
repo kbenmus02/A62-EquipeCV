@@ -2,35 +2,58 @@ name: projetA62
 on:
   push:
     branches:
-      - main 
+      - main
+      - CML_plus_dvc 
 jobs:
-  run:
+  CI_generate_model:
     runs-on: ubuntu-latest
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
-      - name: cml_run
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8.10'
+      
+      - name: intstall_requirements
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          #GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-          GDRIVE_CREDENTIALS_DATA: '{"access_token": "ya29.a0ARrdaM8zMXhrq8TgWbj2wyJuNG1HhrLgZm_PSyeycUcLas3iCFcA7wLqcat8SEX2oJh_qm7suUueEulxBZznxHvtM7nXVO_avIiH6nu5LIUECFWThxm5IHL9Qc9OYif5_u5cL01NuOIwiNuEX6e_qvfkVjxN", "client_id": "710796635688-iivsgbgsb6uv1fap6635dhvuei09o66c.apps.googleusercontent.com", "client_secret": "a1Fz59uTpVNeG_VGuSKDLJXv", "refresh_token": "1//04XfZoFXl1bBrCgYIARAAGAQSNwF-L9Ir273eun1GqHZl6gX_ygZDJ2Wi4aRfUAi60tjmOW1A4bbb7BoiJXONKupvSCUQncO2H8s", "token_expiry": "2021-12-31T02:15:31Z", "token_uri": "https://oauth2.googleapis.com/token", "user_agent": null, "revoke_uri": "https://oauth2.googleapis.com/revoke", "id_token": null, "id_token_jwt": null, "token_response": {"access_token": "ya29.a0ARrdaM8zMXhrq8TgWbj2wyJuNG1HhrLgZm_PSyeycUcLas3iCFcA7wLqcat8SEX2oJh_qm7suUueEulxBZznxHvtM7nXVO_avIiH6nu5LIUECFWThxm5IHL9Qc9OYif5_u5cL01NuOIwiNuEX6e_qvfkVjxN", "expires_in": 3599, "scope": "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata", "token_type": "Bearer"}, "scopes": ["https://www.googleapis.com/auth/drive", "https://www.googleapis.com/auth/drive.appdata"], "token_info_uri": "https://oauth2.googleapis.com/tokeninfo", "invalid": false, "_class": "OAuth2Credentials", "_module": "oauth2client.client"}'
-
         run: |
-          
-          echo "chargement des donnees"
-          dvc pull model
-          echo "chargement termine"
-
           pip install -r requirements.txt
-          jupyter nbconvert --to notebook --execute notebook/iteration_9_1_test_model_sur_git.ipynb
-          python notebook/hello.py
-          echo "FINI"
+          
+          
+      - name: upload data
+        env:
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+        run: |
+          dvc pull model
+          ls -lrt model/
+
+          jupyter nbconvert --to notebook --execute notebook/iteration_4_generate_model_cnn.ipynb
+
+          pip freeze > requirements_docker.txt
+          python --version > python_version.txt
+
+      - name: preparer_gitpush
+        run: |
+          git config --local user.email "$GITHUB_EMAIL"
+          git config --local user.name "$GITHUB_USERNAME"
+          git add requirements_docker.txt python_version.txt
+          
+          echo $(date +%Z)
+          git commit --allow-empty -m "push requirements at $(date +%d-%b-%H_%M)"
+          
+          #git tag -a "v2.2" -m "tag avec temoin.txt depuis gitactions"
+          #git push --follow-tags
+          #git push --tags
+          git push
+        env:
+          GITHUB_USERNAME: "$GITHUB_USERNAME"
+          GITHUB_EMAIL: "$GITHUB_EMAIL"
+
+
+
+
 
           
-          # Your ML workflow goes here
-          #pip install -r requirements.txt
-          #python Pointure_GaussianNB.ipynb
-          #jupyter nbconvert --to notebook --execute Pointure_GaussianNB.ipynb
-          # Write your CML report
-          #echo "## Metriques:" >> report.md
-          #cat metrics.txt >> report.md
+                    
+        
