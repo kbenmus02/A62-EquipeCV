@@ -27,7 +27,9 @@ jobs:
         run: |
           dvc pull model
           ls -lrt model/
-
+      
+      - name: generate model
+        run: |
           jupyter nbconvert --to notebook --execute notebook/iteration_4_generate_model_cnn.ipynb
 
           pip freeze > requirements_docker.txt
