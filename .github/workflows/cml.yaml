@@ -34,6 +34,10 @@ jobs:
 
           pip freeze > requirements_docker.txt
           python --version > python_version.txt
+          echo "# Metriques:" > report.md
+          echo "# Metriques:" > report2.md
+          
+          ls -lrt
 
       - name: preparer_gitpush
         run: |
