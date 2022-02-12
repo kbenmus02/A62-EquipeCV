@@ -37,7 +37,7 @@ jobs:
         run: |
           git config --local user.email "$GITHUB_EMAIL"
           git config --local user.name "$GITHUB_USERNAME"
-          git add requirements_docker.txt python_version.txt
+          git add requirements_docker.txt python_version.txt report.md
           
           echo $(date +%Z)
           git commit --allow-empty -m "push requirements at $(date +%d-%b-%H_%M)"
