@@ -1,13 +1,13 @@
-dill
 glob2
 import-ipynb
 mlflow
-opencv-python
+opencv-python-headless
 pickleshare
 seaborn
 sklearn
 jupyter
 matplotlib
+tensorflow
 
 
 
