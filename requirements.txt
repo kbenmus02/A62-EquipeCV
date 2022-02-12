@@ -1,6 +1,7 @@
 glob2
 import-ipynb
 mlflow
+numpy
 opencv-python-headless
 pickleshare
 seaborn
