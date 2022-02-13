@@ -61,7 +61,9 @@ jobs:
           ################ ici attetion, changer la verions  #################
           
           #git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +%d-%b-%Y--%H_%M)"
-          git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +"%D--%T")"
+          #git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +"%D--%T")"
+          git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +%d-%b-%Y--%H:%M:%S)"
+          
            
           #######################################################################################
           
