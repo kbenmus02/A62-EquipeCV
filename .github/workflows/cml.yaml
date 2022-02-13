@@ -30,20 +30,22 @@ jobs:
       
       - name: generate model
         run: |
+          echo "# Metriques:" > report.md
+          echo "# Matrice de Confusion:" > report2.md
+
           jupyter nbconvert --to notebook --execute notebook/iteration_4_generate_model_cnn.ipynb
 
+          
           pip freeze > requirements_docker.txt
           python --version > python_version.txt
-          #echo "# Metriques:" > report.md
-          #echo "# Metriques:" > report2.md
-          
+          cat report2.md >> report.md          
           ls -lrt
 
       - name: preparer_gitpush
         run: |
           git config --local user.email "$GITHUB_EMAIL"
           git config --local user.name "$GITHUB_USERNAME"
-          git add requirements_docker.txt python_version.txt notebook/report.md
+          git add requirements_docker.txt python_version.txt report.md
           
           echo $(date +%Z)
           git commit --allow-empty -m "push requirements at $(date +%d-%b-%H_%M)"
