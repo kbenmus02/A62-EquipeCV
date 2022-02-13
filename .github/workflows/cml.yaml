@@ -20,18 +20,13 @@ jobs:
         run: |
           pip install -r requirements.txt
                     
-      - name: upload data and setup neptune
+      - name: upload data
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-          NEPTUNE_API_TOKEN: ${{ secrets.NEPTUNE_API_TOKEN }}
-          NEPTUNE_PROJECT: ${{secrets.NEPTUNE_PROJECT}}
-
         run: |
           dvc pull model
           ls -lrt model/
-          export NEPTUNE_API_TOKEN="$NEPTUNE_API_TOKEN"
-          export NEPTUNE_PROJECT="$NEPTUNE_PROJECT"
-
+      
       - name: generate model and report.md
         run: |
           echo "# Metriques:" > report.md
@@ -39,8 +34,6 @@ jobs:
 
           jupyter nbconvert --to notebook --execute notebook/iteration_4_generate_model_cnn.ipynb
           
-          neptune mlflow
-
           #pip freeze > requirements_docker.txt
           #python --version > python_version.txt
           echo "   " >> report.md
@@ -52,16 +45,15 @@ jobs:
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run: |
-          #dvc add model
-          #dvc push
-          echo $(date +%Z)
+          dvc add model
+          dvc push
           
       - name: preparer_gitpush
         run: |
           git config --local user.email "$GITHUB_EMAIL"
           git config --local user.name "$GITHUB_USERNAME"
-          git add requirements_docker.txt python_version.txt report.md
-          #git add report.md model.dvc
+          #git add requirements_docker.txt python_version.txt report.md
+          git add report.md model.dvc
 
           echo $(date +%Z)
           git commit --allow-empty -m "push model.dvc and report at $(date +%d-%b-%H_%M)"
@@ -70,7 +62,7 @@ jobs:
           
           #git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +%d-%b-%Y--%H_%M)"
           #git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +"%D--%T")"
-          git tag -a "v2.3.2" -m "generate model in github, $(date +%Z), at $(date +%d-%b-%Y--%H:%M:%S)"
+          git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +%d-%b-%Y--%H:%M:%S)"
           
            
           #######################################################################################
