@@ -38,6 +38,7 @@ jobs:
           
           pip freeze > requirements_docker.txt
           python --version > python_version.txt
+          cat "   " >> report.md
           cat report2.md >> report.md          
           ls -lrt
 
