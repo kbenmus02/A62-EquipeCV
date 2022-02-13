@@ -19,8 +19,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pip install -r requirements.txt
-          
-          
+                    
       - name: upload data
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
@@ -28,34 +27,47 @@ jobs:
           dvc pull model
           ls -lrt model/
       
-      - name: generate model
+      - name: generate model and report.md
         run: |
           echo "# Metriques:" > report.md
           echo "# Matrice de Confusion:" > report2.md
 
           jupyter nbconvert --to notebook --execute notebook/iteration_4_generate_model_cnn.ipynb
-
           
-          pip freeze > requirements_docker.txt
-          python --version > python_version.txt
+          #pip freeze > requirements_docker.txt
+          #python --version > python_version.txt
           echo "   " >> report.md
           echo "   " >> report.md
           cat report2.md >> report.md          
           ls -lrt
 
+      - name: send model to remote storage
+        env:
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+        run: |
+          dvc add model
+          dvc push
+          
       - name: preparer_gitpush
         run: |
           git config --local user.email "$GITHUB_EMAIL"
           git config --local user.name "$GITHUB_USERNAME"
-          git add requirements_docker.txt python_version.txt report.md
-          
+          #git add requirements_docker.txt python_version.txt report.md
+          git add report.md model.dvc
+
           echo $(date +%Z)
-          git commit --allow-empty -m "push requirements at $(date +%d-%b-%H_%M)"
+          git commit --allow-empty -m "push model.dvc and report at $(date +%d-%b-%H_%M)"
           
-          #git tag -a "v2.2" -m "tag avec temoin.txt depuis gitactions"
-          #git push --follow-tags
-          #git push --tags
-          git push
+          ################ ici attetion, changer la verions  #################
+          
+          git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +%d-%b-%H_%M)"
+          #######################################################################################
+          
+          git push --follow-tags
+
+          #################################
+          # creer dossier app, add origin 2 et push model.dvc vers origin 2
+        
         env:
           GITHUB_USERNAME: "$GITHUB_USERNAME"
           GITHUB_EMAIL: "$GITHUB_EMAIL"
