@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - CML_plus_dvc 
+      #- CML_plus_dvc 
 jobs:
   CI_generate_model:
     runs-on: ubuntu-latest
@@ -60,7 +60,7 @@ jobs:
           
           ################ ici attetion, changer la verions  #################
           
-          git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +%d-%b-%H_%M)"
+          git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +%d-%b-%Y--%H_%M)"
           #######################################################################################
           
           git push --follow-tags
