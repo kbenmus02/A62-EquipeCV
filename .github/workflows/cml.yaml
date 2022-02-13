@@ -34,8 +34,8 @@ jobs:
 
           pip freeze > requirements_docker.txt
           python --version > python_version.txt
-          echo "# Metriques:" > report.md
-          echo "# Metriques:" > report2.md
+          #echo "# Metriques:" > report.md
+          #echo "# Metriques:" > report2.md
           
           ls -lrt
 
@@ -43,7 +43,7 @@ jobs:
         run: |
           git config --local user.email "$GITHUB_EMAIL"
           git config --local user.name "$GITHUB_USERNAME"
-          git add requirements_docker.txt python_version.txt report.md
+          git add requirements_docker.txt python_version.txt notebook/report.md
           
           echo $(date +%Z)
           git commit --allow-empty -m "push requirements at $(date +%d-%b-%H_%M)"
