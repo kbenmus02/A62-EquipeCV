@@ -58,7 +58,7 @@ jobs:
           git commit --allow-empty -m "push model.dvc and report at $(date +%d-%b-%H_%M)"
           
           ################ ici attetion, changer la verions  #################
-          git tag -a "v2.3.1" -m "generate model in github, $(date +%Z), at $(date +%d-%b-%Y--%H:%M:%S)"
+          git tag -a "v2.4.0" -m "generate model in github, $(date +%Z), at $(date +%d-%b-%Y--%H:%M:%S)"
           #######################################################################################
           
           git push --follow-tags
