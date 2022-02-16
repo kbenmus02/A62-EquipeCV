@@ -2,3 +2,5 @@
 /data/sample/
 /notebook/.ipynb_checkpoints/
 /model
+/data_Xy
+/.env
