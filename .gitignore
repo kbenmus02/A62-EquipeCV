@@ -1,5 +1,6 @@
 /cell_images/
 /data/sample/
-/model/X.pklz
-/model/y.pklz
 /notebook/.ipynb_checkpoints/
+/model
+/data_Xy
+/.env
