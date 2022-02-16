@@ -38,6 +38,7 @@ jobs:
           echo "   " >> report.md
           echo "   " >> report.md
           cat report2.md >> report.md          
+          cat report.md
           ls -lrt
 
       - name: send model to remote storage
